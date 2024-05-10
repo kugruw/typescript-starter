@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "strict": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "target": "ES6",
+    "module": "Node16",
+    "moduleResolution": "Node16"
   }
 }
