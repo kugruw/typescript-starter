@@ -1,0 +1,4 @@
+{
+  // Although flat config is not experimental anymore
+  "eslint.experimental.useFlatConfig": true
+}
