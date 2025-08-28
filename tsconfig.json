@@ -30,7 +30,8 @@
     "skipLibCheck": true,
     // End of from @tsconfig/strictest
 
-    "outDir": "dist"
+    "outDir": "dist",
+    "sourceMap": true
   },
   "include": ["src"]
 }

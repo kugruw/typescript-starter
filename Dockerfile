@@ -15,4 +15,4 @@ COPY --from=builder /app/node_modules ./node_modules
 RUN npm prune --production
 USER node
 COPY --from=builder /app/dist ./dist
-CMD [ "node", "dist/index.js" ]
+CMD [ "node", "-r", "source-map-support/register", "dist/index.js" ]
