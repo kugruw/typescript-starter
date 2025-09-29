@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  // provider = "prisma-client-js"
+  // provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?
+  policies  Policy[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Policy {
+  id           String    @id @default(uuid())
+  customerId   String
+  customer     Customer  @relation(fields: [customerId], references: [id])
+  policyNumber String    @unique
+  productType  String    // "health", "auto", "property"
+  premiumAmount Float
+  status       PolicyStatus @default(PENDING)
+  startDate    DateTime?
+  endDate      DateTime?
+  payments     Payment[]
+  claims       Claim[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Payment {
+  id           String   @id @default(uuid())
+  policyId     String
+  policy       Policy   @relation(fields: [policyId], references: [id])
+  amount       Float
+  paymentMethod String  // "credit_card", "bank_transfer", "ewallet"
+  status       PaymentStatus @default(PENDING)
+  paymentDate  DateTime?
+  createdAt    DateTime @default(now())
+}
+
+model Claim {
+  id          String   @id @default(uuid())
+  policyId    String
+  policy      Policy   @relation(fields: [policyId], references: [id])
+  claimAmount Float
+  description String
+  status      ClaimStatus @default(PENDING)
+  submittedAt DateTime @default(now())
+  processedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum PolicyStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+  EXPIRED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum ClaimStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  PAID
+}
+
