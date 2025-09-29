@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.release.json",
     "start": "node -r source-map-support/register --env-file=.env dist/index.js",
     "dev": "node --loader ts-node/esm --watch-path=./src --env-file=.env src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -23,7 +23,8 @@
     "prettier": "3.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^7.8.0"
+    "typescript-eslint": "^7.8.0",
+    "vitest": "^3.2.4"
   },
   "lint-staged": {
     "*.ts": [
