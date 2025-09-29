@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "engines": {
+    "node": ">= 22 < 23"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.release.json",
     "start": "node -r source-map-support/register --env-file=.env dist/index.js",
