@@ -1,1 +1,3 @@
-console.log("asw");
+import { startServer } from "./app.js";
+
+startServer();
